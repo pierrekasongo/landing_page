@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tapis roulant | Sport à la maison</title>
+    <style>
+  :root {
+    --bg: #f7faf8;
+    --surface: rgba(255, 255, 255, 0.78);
+    --surface-strong: rgba(255, 255, 255, 0.95);
+    --text: #123129;
+    --muted: #5d716c;
+    --primary: #0f9f73;
+    --primary-2: #14b884;
+    --accent: #ff8a3d;
+    --accent-2: #ffb36b;
+    --line: rgba(15, 159, 115, 0.12);
+    --shadow-sm: 0 12px 30px rgba(18, 49, 41, 0.08);
+    --shadow-lg: 0 24px 70px rgba(18, 49, 41, 0.12);
+    --radius: 28px;
+    --radius-sm: 20px;
+    --max: 1180px;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    color: var(--text);
+    background:
+      radial-gradient(circle at top left, rgba(20, 184, 132, 0.14), transparent 28%),
+      radial-gradient(circle at top right, rgba(255, 138, 61, 0.16), transparent 24%),
+      linear-gradient(180deg, #f0fbf6 0%, #ffffff 38%, #fff8f1 100%);
+  }
+
+  a { text-decoration: none; color: inherit; }
+  img { max-width: 100%; display: block; }
+  h1, h2, h3, p { margin-top: 0; }
+
+  .container {
+    width: min(var(--max), calc(100% - 32px));
+    margin: 0 auto;
+  }
+
+  .hero,
+  .section {
+    position: relative;
+    padding: 84px 0;
+  }
+
+  .hero { padding-top: 38px; }
+
+  .hero-grid,
+  .offer-grid,
+  .benefits-grid,
+  .testimonials-grid {
+    display: grid;
+    gap: 24px;
+  }
+
+  .hero-grid {
+    grid-template-columns: 1.05fr 0.95fr;
+    align-items: center;
+  }
+
+  .offer-grid { grid-template-columns: 1fr 1fr; }
+  .benefits-grid { grid-template-columns: repeat(4, 1fr); }
+  .testimonials-grid { grid-template-columns: repeat(3, 1fr); }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 11px 18px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, rgba(15,159,115,0.12), rgba(255,138,61,0.12));
+    border: 1px solid rgba(15, 159, 115, 0.14);
+    color: var(--primary);
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 0.01em;
+    box-shadow: var(--shadow-sm);
+  }
+
+  h1 {
+    max-width: 720px;
+    font-size: clamp(38px, 5vw, 64px);
+    line-height: 0.98;
+    letter-spacing: -0.04em;
+    margin: 18px 0 0;
+  }
+
+  .lead {
+    margin-top: 18px;
+    max-width: 680px;
+    font-size: 19px;
+    line-height: 1.85;
+    color: var(--muted);
+  }
+
+  .cta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-top: 30px;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 58px;
+    padding: 0 24px;
+    border-radius: 18px;
+    font-size: 16px;
+    font-weight: 800;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  }
+
+  .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 30px rgba(18, 49, 41, 0.12);
+  }
+
+  .btn-primary {
+    color: #fff;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    box-shadow: 0 14px 34px rgba(15, 159, 115, 0.28);
+  }
+
+  .btn-secondary {
+    color: var(--text);
+    background: rgba(255,255,255,0.82);
+    border: 1px solid rgba(18, 49, 41, 0.08);
+    backdrop-filter: blur(12px);
+  }
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-top: 28px;
+  }
+
+  .stat-card,
+  .card,
+  .offer-card,
+  .steps-card,
+  .testimonial,
+  .faq-item,
+  .gallery-box {
+    border-radius: var(--radius);
+    background: var(--surface);
+    backdrop-filter: blur(14px);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .stat-card {
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .stat-card::before {
+    content: "";
+    position: absolute;
+    inset: auto auto -40px -20px;
+    width: 100px;
+    height: 100px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, rgba(15,159,115,0.14), rgba(255,138,61,0.14));
+  }
+
+  .stat-card small {
+    display: block;
+    color: var(--muted);
+    font-size: 13px;
+    margin-bottom: 8px;
+    position: relative;
+  }
+
+  .stat-card strong {
+    position: relative;
+    font-size: 30px;
+    letter-spacing: -0.03em;
+  }
+
+  .hero-media,
+  .card,
+  .offer-card,
+  .steps-card,
+  .testimonial {
+    padding: 28px;
+  }
+
+  .hero-media {
+    background: linear-gradient(180deg, rgba(255,255,255,0.82), rgba(255,255,255,0.94));
+    box-shadow: var(--shadow-lg);
+  }
+
+  .video-box {
+    min-height: 430px;
+    border-radius: 30px;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.75), rgba(255,255,255,0.95)),
+      radial-gradient(circle at top left, rgba(20,184,132,0.18), transparent 38%),
+      radial-gradient(circle at bottom right, rgba(255,138,61,0.15), transparent 34%);
+    border: 1.5px dashed rgba(15, 159, 115, 0.22);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 26px;
+  }
+
+  .video-box h3 {
+    font-size: 28px;
+    letter-spacing: -0.02em;
+    margin-bottom: 10px;
+  }
+
+  .video-box p {
+    max-width: 440px;
+    margin: 0 auto;
+    line-height: 1.8;
+    color: var(--muted);
+  }
+
+  .gallery-title {
+    margin: 24px 0 14px;
+    text-align: center;
+    font-size: 20px;
+    letter-spacing: -0.02em;
+  }
+
+  .product-gallery {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+  }
+
+  .gallery-box {
+    aspect-ratio: 1 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 14px;
+    color: var(--muted);
+    border-radius: 22px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(245,248,248,0.98));
+    font-weight: 700;
+  }
+
+  .section-head {
+    max-width: 760px;
+    margin: 0 auto 44px;
+    text-align: center;
+  }
+
+  .section-head h2 {
+    font-size: clamp(30px, 4vw, 46px);
+    line-height: 1.05;
+    letter-spacing: -0.04em;
+  }
+
+  .section-head p {
+    margin-top: 16px;
+    font-size: 18px;
+    line-height: 1.8;
+    color: var(--muted);
+  }
+
+  .card .icon {
+    width: 58px;
+    height: 58px;
+    display: grid;
+    place-items: center;
+    border-radius: 18px;
+    font-size: 28px;
+    background: linear-gradient(135deg, rgba(15,159,115,0.12), rgba(255,138,61,0.12));
+  }
+
+  .card h3 {
+    margin-top: 18px;
+    font-size: 22px;
+    letter-spacing: -0.03em;
+  }
+
+  .card p,
+  .step p,
+  .faq-answer,
+  .final-cta p,
+  footer {
+    color: var(--muted);
+    line-height: 1.8;
+  }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    font-weight: 900;
+    color: var(--accent);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .price-box {
+    margin-top: 24px;
+    padding: 26px;
+    border-radius: 24px;
+    background: linear-gradient(135deg, rgba(15,159,115,0.12), rgba(255,138,61,0.12));
+    border: 1px solid rgba(15, 159, 115, 0.1);
+  }
+
+  .price {
+    font-size: 58px;
+    font-weight: 900;
+    letter-spacing: -0.05em;
+    margin: 8px 0;
+  }
+
+  .list {
+    list-style: none;
+    padding: 0;
+    margin: 24px 0 0;
+  }
+
+  .list li {
+    padding: 10px 0;
+    font-weight: 600;
+  }
+
+  .step {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 24px;
+    align-items: flex-start;
+  }
+
+  .step-number {
+    flex: 0 0 44px;
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    border-radius: 999px;
+    color: #fff;
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    box-shadow: 0 10px 20px rgba(15, 159, 115, 0.18);
+  }
+
+  .tip-box {
+    margin-top: 26px;
+    padding: 20px;
+    border-radius: 24px;
+    background: linear-gradient(135deg, rgba(255,138,61,0.12), rgba(255,179,107,0.22));
+    border: 1px solid rgba(255,138,61,0.18);
+  }
+
+  .tip-box strong {
+    display: block;
+    margin-bottom: 8px;
+    color: #b45309;
+  }
+
+  .tip-box p {
+    margin: 0;
+    color: #9a3412;
+  }
+
+  .testimonial {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .testimonial::before {
+    content: "“";
+    position: absolute;
+    top: 10px;
+    right: 18px;
+    font-size: 72px;
+    line-height: 1;
+    color: rgba(15,159,115,0.08);
+    font-weight: 900;
+  }
+
+  .testimonial p {
+    font-size: 16px;
+    line-height: 1.9;
+    position: relative;
+  }
+
+  .testimonial strong {
+    display: block;
+    margin-top: 18px;
+    color: var(--text);
+  }
+
+  .faq-wrap {
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  .faq-item {
+    margin-bottom: 14px;
+    overflow: hidden;
+    background: var(--surface-strong);
+  }
+
+  .faq-question {
+    width: 100%;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    text-align: left;
+    padding: 22px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--text);
+  }
+
+  .faq-answer {
+    display: none;
+    padding: 0 24px 22px;
+  }
+
+  .faq-item.active .faq-answer { display: block; }
+
+  .faq-toggle {
+    font-size: 24px;
+    color: var(--accent);
+    margin-left: 10px;
+  }
+
+  .final-cta {
+    padding: 62px 30px;
+    text-align: center;
+    color: #fff;
+    background:
+      radial-gradient(circle at top left, rgba(255,255,255,0.16), transparent 20%),
+      linear-gradient(135deg, var(--primary), var(--accent));
+    box-shadow: var(--shadow-lg);
+  }
+
+  .final-cta p {
+    max-width: 720px;
+    margin: 16px auto 0;
+    color: rgba(255,255,255,0.92);
+    font-size: 18px;
+  }
+
+  .trust-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 22px;
+  }
+
+  .trust-pill {
+    padding: 10px 14px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.16);
+    border: 1px solid rgba(255,255,255,0.24);
+    font-size: 14px;
+    font-weight: 800;
+  }
+
+  footer {
+    padding: 28px 12px 42px;
+    text-align: center;
+    font-size: 14px;
+  }
+
+  @media (max-width: 1024px) {
+    .hero-grid,
+    .offer-grid,
+    .benefits-grid,
+    .testimonials-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .product-gallery {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .hero,
+    .section { padding: 58px 0; }
+
+    .hero-grid,
+    .offer-grid,
+    .benefits-grid,
+    .testimonials-grid,
+    .stats {
+      grid-template-columns: 1fr;
+    }
+
+    .hero { padding-top: 24px; }
+    .video-box { min-height: 320px; }
+    .product-gallery { grid-template-columns: repeat(2, 1fr); }
+    .price { font-size: 46px; }
+    .faq-question { font-size: 17px; }
+    .hero-media,
+    .card,
+    .offer-card,
+    .steps-card,
+    .testimonial { padding: 22px; }
+  }
+</style>
+  </head>
+  <body>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <div class="badge">Livraison incluse • Paiement à la livraison</div>
+          <h1>Faites votre sport à la maison sans aller à la salle</h1>
+          <p class="lead">
+            Découvrez le tapis roulant pratique, compact et idéal pour garder la forme depuis votre salon. Buvez votre café du matin, dépliez le tapis, puis commencez votre séance en regardant la télévision.
+            Vous avez une garantie de 6 mois à l'achat et un service client toujours à votre écoute.
+          </p>
+
+          <div class="cta-row">
+            <a
+              class="btn btn-primary"
+              href="https://wa.me/243816899669?text=Bonjour%20je%20suis%20int%C3%A9ress%C3%A9(e)%20par%20le%20tapis%20roulant.%20Je%20souhaite%20commander."
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Commander sur WhatsApp
+            </a>
+            <a class="btn btn-secondary" href="#prix">Voir le prix</a>
+          </div>
+
+          <div class="stats">
+            <div class="stat-card">
+              <small>Prix</small>
+              <strong>318$</strong>
+            </div>
+            <div class="stat-card">
+              <small>Livraison</small>
+              <strong>Incluse</strong>
+            </div>
+            <div class="stat-card">
+              <small>Paiement</small>
+              <strong>À la réception</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-media card">
+          <div class="video-box">
+            <div>
+              <h3>Zone vidéo produit</h3>
+              <p>
+                Placez ici votre vidéo publicitaire : une femme assise sur son canapé, prenant son café le matin, puis dépliant le tapis roulant et commençant son sport devant la télévision.
+              </p>
+            </div>
+          </div>
+
+          <h3 class="gallery-title">Images du produit</h3>
+          <div class="product-gallery">
+            <div class="gallery-box">Image produit 1</div>
+            <div class="gallery-box">Image produit 2</div>
+            <div class="gallery-box">Image produit 3</div>
+            <div class="gallery-box">Image produit 4</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2>Pourquoi choisir ce tapis roulant ?</h2>
+          <p>
+            Une solution simple pour les personnes qui veulent faire du sport régulièrement, perdre du poids ou garder la forme sans quitter la maison.
+          </p>
+        </div>
+
+        <div class="benefits-grid">
+          <div class="card">
+            <div class="icon">🏠</div>
+            <h3>Sport à domicile</h3>
+            <p>Plus besoin d’aller à la salle. Faites vos exercices tranquillement depuis votre salon.</p>
+          </div>
+          <div class="card">
+            <div class="icon">📦</div>
+            <h3>Compact et pratique</h3>
+            <p>Il se place facilement dans la maison et prend peu de place au quotidien.</p>
+          </div>
+          <div class="card">
+            <div class="icon">🚶🏽‍♀️</div>
+            <h3>Facile à utiliser</h3>
+            <p>Convient parfaitement pour la marche et l’activité physique quotidienne à domicile.</p>
+          </div>
+          <div class="card">
+            <div class="icon">💵</div>
+            <h3>Paiement sécurisé</h3>
+            <p>Vous recevez d’abord votre produit, vous vérifiez, puis vous payez à la livraison.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="prix" style="background: linear-gradient(135deg, #fff7ed, #ecfdf5);">
+      <div class="container offer-grid">
+        <div class="offer-card">
+          <div class="eyebrow">Offre du moment</div>
+          <h2 style="margin-top: 12px; font-size: clamp(28px, 4vw, 42px);">Commandez aujourd’hui en toute confiance</h2>
+          <p class="lead" style="font-size: 18px; max-width: 100%; margin-top: 16px;">
+            Ce tapis roulant est idéal pour un usage à domicile. Il vous aide à intégrer facilement l’activité physique dans votre routine quotidienne.
+          </p>
+
+          <div class="price-box">
+            <div style="color: var(--muted);">Prix promotionnel</div>
+            <div class="price">318$</div>
+            <div style="font-size: 18px; color: var(--text);">Livraison incluse • Paiement après réception</div>
+          </div>
+
+          <ul class="list">
+            <li>✅ Vérification possible avant paiement</li>
+            <li>✅ Commande rapide via WhatsApp</li>
+            <li>✅ Livraison selon votre commune</li>
+            <li>✅ Produit pratique pour la maison</li>
+          </ul>
+
+          <div class="cta-row">
+            <a
+              class="btn btn-primary"
+              href="https://wa.me/243816899669?text=Bonjour%20je%20veux%20r%C3%A9server%20mon%20tapis%20roulant."
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Réserver mon tapis roulant
+            </a>
+          </div>
+        </div>
+
+        <div class="steps-card">
+          <h2 style="font-size: clamp(26px, 4vw, 38px);">Comment commander ?</h2>
+
+          <div style="margin-top: 28px;">
+            <div class="step">
+              <div class="step-number">1</div>
+              <div>
+                <strong>Cliquez sur WhatsApp</strong>
+                <p>Envoyez-nous votre message et votre commune pour vérifier la livraison.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-number">2</div>
+              <div>
+                <strong>Confirmez votre commande</strong>
+                <p>Nous validons rapidement votre zone et le moment souhaité pour la livraison.</p>
+              </div>
+            </div>
+            <div class="step" style="margin-bottom: 0;">
+              <div class="step-number">3</div>
+              <div>
+                <strong>Recevez et payez</strong>
+                <p>Vous recevez le produit, vous vérifiez, puis vous payez à la livraison.</p>
+              </div>
+            </div>
+          </div>
+
+        
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2>Ce que disent nos clients</h2>
+         
+        </div>
+
+        <div class="testimonials-grid">
+          <div class="testimonial">
+            <p>“Très pratique. Je fais maintenant mon sport le matin devant la télévision sans quitter la maison.”</p>
+            <strong>— Grâce</strong>
+          </div>
+          <div class="testimonial">
+            <p>“J’hésitais toujours à aller à la salle. Avec ce tapis roulant, je suis devenue beaucoup plus régulière.”</p>
+            <strong>— Esther</strong>
+          </div>
+          <div class="testimonial">
+            <p>“Livraison rapide et produit conforme. J’aime surtout le fait qu’il soit compact et facile à ranger.”</p>
+            <strong>— Mireille</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="background: linear-gradient(180deg, #f8fafc, #ffffff);">
+      <div class="container">
+        <div class="section-head">
+          <h2>Questions fréquentes</h2>
+         
+        </div>
+
+        <div class="faq-wrap">
+          <div class="faq-item active">
+            <button class="faq-question" type="button">
+              <span>Comment se passe le paiement ?</span>
+              <span class="faq-toggle">−</span>
+            </button>
+            <div class="faq-answer">
+              Le paiement se fait à la livraison après réception et vérification du produit.
+              Nous acceptons le cash, mobile money et transfert bancaire.
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" type="button">
+              <span>La livraison est-elle possible à Kinshasa ?</span>
+              <span class="faq-toggle">+</span>
+            </button>
+            <div class="faq-answer">
+              Oui, la livraison est possible selon votre commune. Contactez-nous sur WhatsApp pour confirmation rapide.
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" type="button">
+              <span>Ce tapis roulant est-il adapté à la maison ?</span>
+              <span class="faq-toggle">+</span>
+            </button>
+            <div class="faq-answer">
+              Oui, il est pensé pour une utilisation à domicile, avec un format pratique et facile à installer.
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" type="button">
+              <span>Puis-je commander rapidement ?</span>
+              <span class="faq-toggle">+</span>
+            </button>
+            <div class="faq-answer">
+              Oui. Cliquez simplement sur le bouton WhatsApp et envoyez votre commune pour organiser la livraison.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container final-cta card">
+        <h2 style="font-size: clamp(30px, 4vw, 44px);">Prêt(e) à faire votre sport à la maison ?</h2>
+        <p>
+          Commandez dès maintenant votre tapis roulant et organisez votre livraison directement sur WhatsApp.
+        </p>
+
+        <div class="trust-row">
+          <div class="trust-pill">✔ Paiement à la livraison</div>
+          <div class="trust-pill">✔ Vérification avant paiement</div>
+          <div class="trust-pill">✔ Livraison rapide</div>
+        </div>
+
+        
+
+        <div class="cta-row" style="justify-content: center; margin-top: 28px;">
+          <a
+            class="btn btn-primary"
+          
+            href="https://wa.me/243816899669?text=Bonjour%20je%20veux%20commander%20le%20tapis%20roulant."
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Commander maintenant
+          </a>
+          <a class="btn" style="border: 1px solid rgba(255,255,255,0.35); color: white;" href="#prix">
+            Voir l’offre
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      @kasempire e-com 2026
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
